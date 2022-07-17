@@ -1,0 +1,8 @@
+name: OpenWorldStats
+main: dev.handschrift.init.OpenWorldStats
+version: 1.0.0
+commands:
+  worldstats:
+    description: Shows the worldstats
+    usage: /worldstats
+    permission: worldstats.show
