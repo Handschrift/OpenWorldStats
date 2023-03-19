@@ -4,6 +4,9 @@ import dev.handschrift.commands.WorldStatsCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -18,7 +21,12 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 
-public class OpenWorldStats extends JavaPlugin {
+public class OpenWorldStats extends JavaPlugin implements Listener {
+    @EventHandler
+    public void ex(EntityExplodeEvent event) {
+        event.setCancelled(true);
+    }
+
     @Override
     public void onEnable() {
 
@@ -26,6 +34,7 @@ public class OpenWorldStats extends JavaPlugin {
         configuration.options().copyDefaults(true);
         configuration.addDefault("filesizeupdate_in_ticks", 72000);
 
+        this.getServer().getPluginManager().registerEvents(this, this);
         this.getCommand("worldstats").setExecutor(new WorldStatsCommand());
 
         if (!this.getDataFolder().exists()) {
